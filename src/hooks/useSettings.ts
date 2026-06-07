@@ -44,6 +44,7 @@ type Settings = {
   position: PositionOption
   horizontalOffset: number
   verticalOffset: number
+  showLibraryBadges: boolean
 }
 
 const defaultSettings: Settings = {
@@ -52,7 +53,8 @@ const defaultSettings: Settings = {
   layoutMode: 'card',
   position: 'top-right',
   horizontalOffset: 24,
-  verticalOffset: 56
+  verticalOffset: 56,
+  showLibraryBadges: true
 }
 
 const readSettings = (): Settings => {

@@ -5,21 +5,8 @@ import { FaExternalLinkAlt } from 'react-icons/fa'
 import { useGameOverview } from '../../hooks/useGameOverview'
 import { useMetacriticScore } from '../../hooks/useMetacriticScore'
 import { useSettings, DateFormat } from '../../hooks/useSettings'
+import { toneForScore, toneForUserScore } from '../../lib/scoreTone'
 import { criticDeckStyle } from './style'
-
-const toneForScore = (score?: number | null) => {
-  if (typeof score !== 'number') return 'unknown'
-  if (score >= 75) return 'great'
-  if (score >= 60) return 'good'
-  return 'weak'
-}
-
-const toneForUserScore = (score?: number | null) => {
-  if (typeof score !== 'number') return 'unknown'
-  if (score >= 8) return 'great'
-  if (score >= 6.5) return 'good'
-  return 'weak'
-}
 
 const monthNames = [
   'January',

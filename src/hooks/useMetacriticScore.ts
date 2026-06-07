@@ -1,6 +1,8 @@
 import { fetchNoCors } from '@decky/api'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { metacriticFetchQueue } from '../lib/fetchQueue'
+
 export type MetacriticScorePayload = {
   found: boolean
   title?: string
@@ -317,6 +319,16 @@ const setCached = (key: string, payload: MetacriticScorePayload) => {
   }
 }
 
+export const getScoreFromCache = (title: string): MetacriticScorePayload | undefined => {
+  const key = normalize(title?.trim() || '')
+  if (!key) return undefined
+  const entry = getCached(key)
+  if (entry && Date.now() - entry.timestamp < CACHE_TTL_MS) {
+    return entry.payload
+  }
+  return undefined
+}
+
 export const useMetacriticScore = (title?: string | null) => {
   const [data, setData] = useState<MetacriticScorePayload | undefined>()
   const [loading, setLoading] = useState(false)
@@ -336,7 +348,9 @@ export const useMetacriticScore = (title?: string | null) => {
     setLoading(true)
     setError(undefined)
     try {
-      const result = await queryMetacritic(normalizedTitle, 'PC')
+      const result = await metacriticFetchQueue.enqueue(() =>
+        queryMetacritic(normalizedTitle, 'PC')
+      )
       if (result.found && cacheKey) {
         setCached(cacheKey, result)
       }

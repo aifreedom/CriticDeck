@@ -66,6 +66,66 @@ const SettingsPanel = () => {
                 margin: '8px 0'
               }}
             />
+            <span style={{ paddingLeft: 2, fontWeight: 600 }}>Library grid scores</span>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {[{ value: true, label: 'On' }, { value: false, label: 'Off' }].map((option) => {
+                const checked = settings.showLibraryBadges === option.value
+                return (
+                  <button
+                    key={String(option.value)}
+                    type="button"
+                    onClick={() => setSetting({ showLibraryBadges: option.value })}
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 8,
+                      padding: '10px 14px',
+                      borderRadius: 6,
+                      border: checked
+                        ? '1px solid rgba(255,255,255,0.6)'
+                        : '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: checked
+                        ? 'rgba(255,255,255,0.12)'
+                        : 'rgba(255,255,255,0.04)',
+                      color: 'inherit',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        width: 18,
+                        height: 18,
+                        borderRadius: '50%',
+                        border: '2px solid rgba(255,255,255,0.6)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 12
+                      }}
+                    >
+                      {checked ? '●' : ' '}
+                    </span>
+                    <span>{option.label}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </PanelSectionRow>
+        <PanelSectionRow>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              gap: 12,
+              paddingRight: 12,
+              marginLeft: -4
+            }}
+          >
             <span style={{ paddingLeft: 2, fontWeight: 600 }}>Release date format</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {DATE_FORMAT_OPTIONS.map((option) => {
